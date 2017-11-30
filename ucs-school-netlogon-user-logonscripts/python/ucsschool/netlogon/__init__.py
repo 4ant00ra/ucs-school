@@ -102,6 +102,9 @@ class SqliteQueue(object):
 		# create table if missing
 		self.cursor.execute(u'CREATE TABLE IF NOT EXISTS user_queue (id INTEGER PRIMARY KEY AUTOINCREMENT, userdn TEXT, username TEXT)')
 
+		# create index if missing
+		self.cursor.execute(u'CREATE INDEX IF NOT EXISTS idx_userdn ON user_queue (userdn)')
+
 		# save all changes to database
 		self.db.commit()
 
