@@ -97,6 +97,9 @@ class SqliteQueue(object):
 		os.chmod(self.filename, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
 		self.logger.debug('opened %r successfully' % (self.filename,))
 
+		# automatic retry every few miliseconds for up to 60 s if db is locked
+		self.db.execute("PRAGMA busy_timeout = 60000")
+
 		self.cursor = self.db.cursor()
 
 		# create table if missing
